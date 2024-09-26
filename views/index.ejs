@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Logs</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Link to CSS -->
+</head>
+<body>
+    <h1>Welcome, <%= session.username %>!</h1>
+    
+    <h2>Log Your Info</h2>
+    <form action="/log" method="POST">
+        <input type="text" name="callsign" required placeholder="Callsign" />
+        <input type="text" name="state" required placeholder="State" />
+        <input type="text" name="signal" required placeholder="Signal" />
+        <button type="submit">Log Info</button>
+    </form>
+
+    <h2>Your Logs</h2>
+    <table>
+        <tr>
+            <th>Date/Time</th> <!-- New column for Date/Time -->
+            <th>Callsign</th>
+            <th>State</th>
+            <th>Signal</th>
+        </tr>
+        <% logs.forEach(log => { %>
+            <tr>
+                <td><%= log.dateTime %></td> <!-- Display Date/Time -->
+                <td><%= log.callsign %></td>
+                <td><%= log.state %></td>
+                <td><%= log.signal %></td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>
