@@ -10,8 +10,7 @@
     <h1>Welcome, <%= session.username %>!</h1>
 
     <p>Total Points: <%= totalPoints %></p> <!-- Display total points -->
-    
-    <h2>Log Your Info</h2>
+
     <form action="/log" method="POST">
         <input type="text" name="callsign" required placeholder="Callsign" />
         <input type="text" name="state" required placeholder="State" />
@@ -21,12 +20,11 @@
             <option value="CW">CW</option>
             <option value="FT8/FT4">FT8/FT4</option>
             <option value="AM">AM</option>
-            <option value="FM">FM</option>
-            <option value="Text Digital (OLIVIA/PSK31/RTTY)">Text Digital (OLIVIA/PSK31/RTTY)</option>
+            <option value="OLIVIA/PSK31/MFSK/RTTY/VARA/Winmor">Text Digital (OLIVIA/PSK31/RTTY)</option>
         </select>
         <button type="submit">Log Info</button>
     </form>
-    
+    <br>
     <h2>Your Logs</h2>
     <table>
         <tr>
