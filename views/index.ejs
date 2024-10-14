@@ -4,33 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Logs</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Link to CSS -->
+    <link rel="stylesheet" type="text/css" href="/styles.css">
 </head>
 <body>
     <h1>Welcome, <%= session.username %>!</h1>
+
+    <p>Total Points: <%= totalPoints %></p> <!-- Display total points -->
     
     <h2>Log Your Info</h2>
     <form action="/log" method="POST">
         <input type="text" name="callsign" required placeholder="Callsign" />
         <input type="text" name="state" required placeholder="State" />
         <input type="text" name="signal" required placeholder="Signal" />
+        <select name="mode" required>
+            <option value="SSB">SSB</option>
+            <option value="CW">CW</option>
+            <option value="FT8/FT4">FT8/FT4</option>
+            <option value="AM">AM</option>
+            <option value="FM">FM</option>
+            <option value="Text Digital (OLIVIA/PSK31/RTTY)">Text Digital (OLIVIA/PSK31/RTTY)</option>
+        </select>
         <button type="submit">Log Info</button>
     </form>
-
+    
     <h2>Your Logs</h2>
     <table>
         <tr>
-            <th>Date/Time</th> <!-- New column for Date/Time -->
+            <th>Date/Time</th>
             <th>Callsign</th>
             <th>State</th>
             <th>Signal</th>
+            <th>Mode</th>
+            <th>Action</th>
         </tr>
-        <% logs.forEach(log => { %>
+        <% logs.forEach((log, index) => { %>
             <tr>
-                <td><%= log.dateTime %></td> <!-- Display Date/Time -->
+                <td><%= log.dateTime %></td>
                 <td><%= log.callsign %></td>
                 <td><%= log.state %></td>
                 <td><%= log.signal %></td>
+                <td><%= log.mode %></td>
+                <td>
+                    <form action="/delete-log" method="POST" style="display:inline;">
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
         <% }) %>
     </table>
