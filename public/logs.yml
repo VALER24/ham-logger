@@ -1,0 +1,8 @@
+users:
+  PLACEHOLER:
+    logs:
+      - callsign: PLACEHOLER
+        state: AA
+        signal: "59"
+        dateTime: 13/10/2024, 7:31:17 pm
+    totalPoints: 3
