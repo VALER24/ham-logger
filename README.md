@@ -1,4 +1,4 @@
-# ham-logger
+# ham-logger for kotalink contests
 A simple express node.js program for basic ham radio logging. The yml file is under public folder and created when the app is used and you create a user.
 
 ## Setup:
