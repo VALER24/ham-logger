@@ -57,9 +57,13 @@ app.get('/', (req, res) => {
     const userLogs = yamlData.users[username]?.logs || [];
     const totalPoints = yamlData.users[username]?.totalPoints || 0; // Ensure totalPoints is defined
 
+    // Reverse the logs to display the most recent first
+    const reversedLogs = userLogs.reverse();
+
     // Render the EJS template and pass the user's logs data, total points, and session
-    res.render('index', { logs: userLogs, totalPoints: totalPoints, session: req.session });
+    res.render('index', { logs: reversedLogs, totalPoints: totalPoints, session: req.session });
 });
+
 
 // Handle username submission
 app.post('/set-username', (req, res) => {
@@ -88,13 +92,12 @@ function calculatePoints(mode) {
             return 3;
         case 'CW':
             return 7;
+        case 'AM':
+            return 7;
         case 'FT8/FT4':
             return 0.5;
-        case 'AM':
-        case 'FM':
-            return 10;
-        case 'Text Digital (OLIVIA/PSK31/RTTY)':
-            return 3;
+        case 'OLIVIA/PSK31/MFSK/RTTY/VARA/Winmor':
+            return 4;
         default:
             return 0;
     }
