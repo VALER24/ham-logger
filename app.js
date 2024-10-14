@@ -28,9 +28,21 @@ let yamlData = {};
 if (fs.existsSync(yamlFilePath)) {
     const fileContent = fs.readFileSync(yamlFilePath, 'utf8');
     yamlData = yaml.parse(fileContent) || {};
+
+    // Ensure all users have totalPoints initialized properly
+    for (const username in yamlData.users) {
+        if (typeof yamlData.users[username].totalPoints !== 'number') {
+            yamlData.users[username].totalPoints = 0;
+        }
+    }
+
+    // Save the updated YAML data if any changes were made
+    const newYamlContent = yaml.stringify(yamlData);
+    fs.writeFileSync(yamlFilePath, newYamlContent);
 } else {
     yamlData = { users: {} };
 }
+
 
 // Serve the HTML page and pass logs to the template
 app.get('/', (req, res) => {
@@ -41,11 +53,12 @@ app.get('/', (req, res) => {
         return res.render('username'); // New EJS template for username input
     }
 
-    // Fetch logs for the logged-in user
+    // Fetch logs and total points for the logged-in user
     const userLogs = yamlData.users[username]?.logs || [];
+    const totalPoints = yamlData.users[username]?.totalPoints || 0; // Ensure totalPoints is defined
 
-    // Render the EJS template and pass the user's logs data and session
-    res.render('index', { logs: userLogs, session: req.session });
+    // Render the EJS template and pass the user's logs data, total points, and session
+    res.render('index', { logs: userLogs, totalPoints: totalPoints, session: req.session });
 });
 
 // Handle username submission
@@ -54,7 +67,7 @@ app.post('/set-username', (req, res) => {
 
     if (!yamlData.users[username]) {
         console.log(`Creating account for ${username}`);
-        yamlData.users[username] = { logs: [] };
+        yamlData.users[username] = { logs: [], totalPoints: 0 };
         const newYamlContent = yaml.stringify(yamlData);
         fs.writeFileSync(yamlFilePath, newYamlContent);
     } else {
@@ -68,39 +81,98 @@ app.post('/set-username', (req, res) => {
     res.redirect('/');
 });
 
+// Function to calculate points based on mode
+function calculatePoints(mode) {
+    switch (mode) {
+        case 'SSB':
+            return 3;
+        case 'CW':
+            return 7;
+        case 'FT8/FT4':
+            return 0.5;
+        case 'AM':
+        case 'FM':
+            return 10;
+        case 'Text Digital (OLIVIA/PSK31/RTTY)':
+            return 3;
+        default:
+            return 0;
+    }
+}
+
 // Handle the form submission for logging
 app.post('/log', (req, res) => {
     const username = req.session.username;
     const callsign = req.body.callsign;
     const state = req.body.state;
     const signal = req.body.signal;
+    const mode = req.body.mode; // Capture the mode from the form
 
-    // Ensure the user's log exists
+    // Ensure the user's log and points exist
     if (!yamlData.users[username]) {
-        yamlData.users[username] = { logs: [] };
+        yamlData.users[username] = { logs: [], totalPoints: 0 };
+    }
+
+    // Initialize totalPoints if it's undefined or not a number
+    if (typeof yamlData.users[username].totalPoints !== 'number') {
+        yamlData.users[username].totalPoints = 0;
     }
 
     // Capture the current date and time
     const now = new Date();
     const dateTime = now.toLocaleString(); // Format as per your locale
 
-    // Add the new entry (Callsign, State, Signal, Date/Time) to the user's logs
+    // Calculate points based on mode
+    const points = calculatePoints(mode);
+
+    // Add the new entry to the user's logs
     yamlData.users[username].logs.push({
         callsign: callsign,
         state: state,
         signal: signal,
-        dateTime: dateTime // Add the dateTime
+        mode: mode,
+        dateTime: dateTime
     });
+
+    // Update total points, ensuring it's a number
+    yamlData.users[username].totalPoints += points;
 
     // Convert the updated object back to YAML and save to file
     const newYamlContent = yaml.stringify(yamlData);
     fs.writeFileSync(yamlFilePath, newYamlContent);
 
-    console.log(`Logged for user "${username}": Callsign: "${callsign}", State: "${state}", Signal: "${signal}", Date/Time: "${dateTime}"`);
+    console.log(`Logged for user "${username}": Callsign: "${callsign}", State: "${state}", Signal: "${signal}", Mode: "${mode}", Points: "${points}", Date/Time: "${dateTime}"`);
 
     // Redirect back to the main page to see the updated logs
     res.redirect('/');
 });
+
+// Handle deleting a log entry
+app.post('/delete-log', (req, res) => {
+    const username = req.session.username;
+    const index = parseInt(req.body.index, 10);
+
+    if (username && yamlData.users[username] && yamlData.users[username].logs[index]) {
+        // Get the log entry to be deleted and subtract its points
+        const log = yamlData.users[username].logs[index];
+        const points = calculatePoints(log.mode);
+        yamlData.users[username].totalPoints -= points;
+
+        // Remove the log entry
+        yamlData.users[username].logs.splice(index, 1);
+
+        // Convert the updated object back to YAML and save to file
+        const newYamlContent = yaml.stringify(yamlData);
+        fs.writeFileSync(yamlFilePath, newYamlContent);
+
+        console.log(`Deleted log for user "${username}": Callsign: "${log.callsign}", Points removed: ${points}`);
+    }
+
+    // Redirect back to the main page
+    res.redirect('/');
+});
+
+
 
 // Start the server
 app.listen(port, () => {
