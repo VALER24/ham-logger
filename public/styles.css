@@ -8,7 +8,7 @@
 }
 /* Body background with gradient */
 body {
-    background: linear-gradient(120deg, #0a0a0f, #1f1f37);
+    background: linear-gradient(120deg, #08070f, #000037);
     display: flex;
     justify-content: center;
     align-items: center; /* Center vertically */
