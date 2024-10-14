@@ -4,165 +4,147 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto Mono', monospace;
-    color: #e1e1e1;
+    color: #f0f0f0;
 }
-
 /* Body background with gradient */
 body {
-    background: linear-gradient(135deg, #141414, #2a2a4e);
+    background: linear-gradient(120deg, #0a0a0f, #1f1f37);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Center vertically */
     min-height: 100vh;
     padding: 20px;
-    color: #e1e1e1;
-    flex-direction: column;
+    color: #f0f0f0;
+    flex-direction: column; /* Stack children vertically */
 }
 
 /* Header styling */
 h1 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 15px;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
-}
-
-h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
     margin-bottom: 10px;
-    text-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+    text-shadow: 0 0 8px rgba(80, 160, 240, 0.7);
+}
+h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 6px rgba(60, 140, 220, 0.6);
 }
 
 /* Form styling */
 form {
-    background: rgba(20, 20, 40, 0.9);
-    border: 3px solid #00bcd4;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 35px;
+    margin: 20px 0;
+    border: 2px solid #5050f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
     max-width: 600px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    width: 100%;
+    box-shadow: 0 0 10px rgba(80, 80, 240, 0.5);
+    width: 100%; /* Make form full width */
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Stack form elements vertically */
+    align-items: center; /* Center form elements horizontally */
 }
 
 /* Input and select styling */
 form input[type="text"], form select {
     width: 100%;
-    padding: 12px;
-    margin: 12px 0;
-    background: rgba(30, 30, 70, 0.9);
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(50, 50, 100, 0.9);
     border: none;
-    border-radius: 10px;
-    color: #e1e1e1;
+    border-radius: 8px;
+    color: #f0f0f0;
     outline: none;
     font-size: 1rem;
     transition: all 0.3s;
 }
-
 form input[type="text"]:focus, form select:focus {
-    border: 2px solid #00bcd4;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    border: 2px solid #5050f0;
+    box-shadow: 0 0 10px rgba(80, 80, 240, 0.7);
 }
-
 /* Button styling */
 form button {
-    background: #007887;
+    background: #5050f0;
     border: none;
-    border-radius: 10px;
-    padding: 12px;
-    color: #e1e1e1;
+    border-radius: 8px;
+    padding: 10px;
+    color: #f0f0f0;
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.3s;
 }
-
 form button:hover {
-    background: #26c6da;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+    background: #6a6aff;
+    box-shadow: 0 0 10px rgba(80, 80, 240, 0.8);
 }
-
 /* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     background: rgba(30, 30, 50, 0.9);
-    border: 1px solid #00bcd4;
-    border-radius: 10px;
+    border: 1px solid #5050f0;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(80, 80, 240, 0.6);
     margin: 0 auto;
     max-width: 800px;
 }
 
 th, td {
-    padding: 14px;
+    padding: 12px;
     text-align: center;
-    border-bottom: 1px solid #505050;
+    border-bottom: 1px solid #303050;
     font-size: 1rem;
 }
-
 th {
-    background: #007887;
-    color: #e1e1e1;
+    background: #5050f0;
+    color: #f0f0f0;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
-
 td {
     transition: all 0.3s;
 }
-
 tr:hover td {
-    background: rgba(0, 255, 255, 0.2);
+    background: rgba(80, 80, 240, 0.2);
 }
-
 /* Total Points Paragraph */
 p {
     text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 25px;
-    text-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 6px rgba(60, 140, 220, 0.4);
 }
-
 /* Additional styles */
 input[type="text"]::placeholder {
-    color: #b0f0f0;
+    color: #b0b0f0;
     opacity: 0.8;
 }
-
 button:active {
     transform: scale(0.98);
 }
-
 /* Media queries for responsiveness */
 @media (max-width: 600px) {
     form {
-        padding: 20px;
+        padding: 15px;
     }
-
     h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
-
     h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
-
     input[type="text"], select {
         font-size: 0.9rem;
     }
-
     button {
         font-size: 0.9rem;
-        padding: 10px 14px;
+        padding: 8px 12px;
     }
-
     th, td {
-        padding: 10px;
+        padding: 8px;
     }
 }
