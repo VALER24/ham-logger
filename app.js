@@ -91,13 +91,13 @@ function calculatePoints(mode) {
         case 'SSB':
             return 3;
         case 'CW':
-            return 7;
+            return 5;
         case 'AM':
             return 7;
         case 'FT8/FT4':
             return 0.5;
-        case 'OLIVIA/PSK31/MFSK/RTTY/VARA/Winmor':
-            return 4;
+        case 'OLIVIA/JS8Call/PSK31/MFSK/RTTY/VARA/Winmor/etc':
+            return 3;
         default:
             return 0;
     }
